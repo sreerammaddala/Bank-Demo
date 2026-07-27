@@ -4,15 +4,19 @@ pipeline {
 
     environment {
 
-        IMAGE = "YOUR_DOCKERHUB_USERNAME/abc-bank-demo"
+        IMAGE_NAME = "sushmamounika/bank-app"
+
+        TAG = "v1"
 
     }
 
     stages {
 
-        stage('Clone') {
+        stage('Clone Repository') {
 
             steps {
+
+                echo "Cloning GitHub Repository..."
 
                 checkout scm
 
@@ -20,40 +24,90 @@ pipeline {
 
         }
 
-        stage('Docker Build') {
+        stage('Verify Files') {
 
             steps {
 
-                sh 'docker build -t $IMAGE:latest .'
+                sh 'pwd'
+
+                sh 'ls -la'
 
             }
 
         }
 
-        stage('Docker Push') {
+        stage('Build Docker Image') {
 
             steps {
 
-                sh 'docker push $IMAGE:latest'
+                echo "Building Docker Image..."
+
+                sh 'docker build -t ${IMAGE_NAME}:${TAG} .'
 
             }
 
         }
 
-        stage('Deploy') {
+        stage('Push Docker Image') {
 
             steps {
+
+                echo "Pushing Image to Docker Hub..."
+
+                sh 'docker push ${IMAGE_NAME}:${TAG}'
+
+            }
+
+        }
+
+        stage('Pull Latest Image') {
+
+            steps {
+
+                echo "Pulling Latest Image..."
+
+                sh 'docker pull ${IMAGE_NAME}:${TAG}'
+
+            }
+
+        }
+
+        stage('Deploy Container') {
+
+            steps {
+
+                echo "Deploying Container..."
 
                 sh '''
-                docker pull $IMAGE:latest
 
-                docker stop abc-bank-demo || true
+                docker stop bank-app || true
 
-                docker rm abc-bank-demo || true
+                docker rm bank-app || true
 
-                docker run -d --name abc-bank-demo -p 80:80 $IMAGE:latest
+                docker run -d \
+                --name bank-app \
+                -p 80:80 \
+                ${IMAGE_NAME}:${TAG}
+
                 '''
+
             }
+
+        }
+
+    }
+
+    post {
+
+        success {
+
+            echo "Application Successfully Deployed."
+
+        }
+
+        failure {
+
+            echo "Pipeline Failed."
 
         }
 
