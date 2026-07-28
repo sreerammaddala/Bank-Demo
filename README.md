@@ -256,6 +256,9 @@ DevOps Engineer
 ✔ Jenkins CI/CD Pipeline Created
 
 ✔ Docker Hub Integration
+✔ Container Deployment
+
+✔ Website Accessible through GCP VM Public IP
 ----------------------------
 <img width="1919" height="1096" alt="image" src="https://github.com/user-attachments/assets/01172593-f53c-4d41-a361-9f9abfffe26b" />
 <img width="1911" height="1142" alt="image" src="https://github.com/user-attachments/assets/66cfbd50-73e7-447d-8834-7700a3ff3bc1" />
@@ -263,6 +266,4 @@ DevOps Engineer
 
 
 
-✔ Container Deployment
 
-✔ Website Accessible through GCP VM Public IP
