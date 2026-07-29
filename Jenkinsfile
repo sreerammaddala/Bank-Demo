@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "sushmamounika/bank-app"
+        IMAGE_NAME = "leader67/bank-app"
         TAG = "v1"
     }
 
@@ -15,7 +15,7 @@ pipeline {
                 echo "Cloning GitHub Repository..."
 
                 git branch: 'main',
-                    url: 'https://github.com/sushma-sm/Bank-Demo.git'
+                    url: 'https://github.com/sreerammaddala/Bank-Demo.git'
             }
         }
 
